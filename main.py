@@ -93,23 +93,18 @@ def build_call_relationships(entities):
         data = endpoint(op)
 
         # Find calls relationships
-        i_idx = entity_lookup[e]
+        j_idx = entity_lookup[e]
         entity = (op + data).actor.entity
-        print("\n----\n", i_idx)
         for relationship in entity.relationships:
             if relationship.type == "CALLS":
                 rel_entity = (relationship.target.guid,
                               relationship.target.entity.name)
 
                 try:
-                    j_idx = entity_lookup[rel_entity]
-                    print(j_idx, end=' ')
+                    i_idx = entity_lookup[rel_entity]
                     calls[i_idx][j_idx] = 1
                 except KeyError:
                     continue
-
-        print("\n")
-        print(calls[i_idx])
 
     return calls
 
